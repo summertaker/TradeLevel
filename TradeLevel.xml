@@ -1,0 +1,109 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+
+    <Script file="TradeLevel.lua"/>
+
+    <Frame name="TradeLevelFrame" parent="UIParent" enableMouse="true" movable="true" clampedToScreen="true" hidden="true">
+        <Size x="122" y="55"/>
+        <Anchors>
+            <Anchor point="CENTER"/>
+        </Anchors>
+
+        <!-- 배경 및 테두리 -->
+        <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="false">
+            <BackgroundInsets>
+                <AbsInset left="0" right="0" top="0" bottom="0"/>
+            </BackgroundInsets>
+            <EdgeSize>
+                <AbsValue val="12"/>
+            </EdgeSize>
+            <color r="0" g="0" b="0" a="0.75"/>
+        </Backdrop>
+
+        <Frames>
+            <!-- 기술 버튼 -->
+            <CheckButton name="TradeLevelSpellButton" inherits="SecureActionButtonTemplate">
+                <Size x="36" y="36"/>
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset x="10" y="-10"/>
+                    </Anchor>
+                </Anchors>
+                <Frames>
+                    <Cooldown name="$parentCooldown" inherits="CooldownFrameTemplate"/>
+                </Frames>
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture name="$parentIcon" parentKey="icon"/>
+                    </Layer>
+                </Layers>
+                <HighlightTexture file="Interface\Buttons\ButtonHilight-Square" alphaMode="ADD"/>
+                <PushedTexture file="Interface\ICONS\Trade_Fishing" alphaMode="ADD"/>
+            </CheckButton>
+
+            <!-- 닫기 버튼 -->
+            <Button name="TradeLevelCloseButton" inherits="UIPanelCloseButton"><!-- frameStrata="DIALOG"> -->
+                <Size x="25" y="25"/>
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset x="-2" y="-2"/>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick function="TradeLevelCloseButton_OnClick"/>
+                </Scripts>
+            </Button>
+        </Frames>
+
+        <Layers>
+            <Layer level="OVERLAY">
+
+                <!-- 제목 텍스트 -->
+                <FontString name="TradeLevelTitleText" inherits="GameFontNormalSmall" text="Level">
+                    <!-- Color r="1" g="1" b="0" a="0.9"/ -->
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="TradeLevelSpellButton" relativePoint="TOPRIGHT" x="6" y="-2" />
+                    </Anchors>
+                </FontString>
+
+                <!-- 현재 레벨 텍스트 -->
+                <FontString name="TradeLevelCurrentText" font="Fonts\FRIZQT__.TTF" text="Current" justifyH="LEFT" justifyV="MIDDLE">
+                    <Color r="1" g="1" b="1" a="1"/>
+                    <FontHeight val="16"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="TradeLevelTitleText" relativePoint="BOTTOMLEFT" x="-2" y="-4" />
+                    </Anchors>
+                    <Shadow>
+                        <Offset x="1" y="1" />
+                        <Color r="0" g="0" b="0"/>
+                    </Shadow>
+                </FontString>
+
+                <!-- 최대 레벨 텍스트 -->
+                <FontString name="TradeLevelMaxText" inherits="GameFontNormalSmall" text="Max">
+                    <Color r="0" g="0.7" b="0.7" a="1"/>
+                    <Anchors>
+                        <Anchor point="BOTTOMLEFT" relativeTo="TradeLevelCurrentText" relativePoint="BOTTOMRIGHT" x="0" y="2" />
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+
+        <Scripts>
+            <OnLoad>
+                TradeLevel_OnLoad(self);
+                self:RegisterForDrag("LeftButton");
+            </OnLoad>
+            <OnDragStart>
+                self:StartMoving()
+            </OnDragStart>
+            <OnDragStop>
+                self:StopMovingOrSizing()
+            </OnDragStop>
+            <OnEvent>
+                TradeLevel_OnEvent(self, event, ...);
+            </OnEvent>
+        </Scripts>
+
+    </Frame>
+
+</Ui>

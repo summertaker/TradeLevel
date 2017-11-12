@@ -1,0 +1,5 @@
+<Bindings>
+	<Binding name="TRADELEVEL_TOGGLE" header="TRADLEVEL" category="ADDONS">
+		TradeLevel_ToggleKey_OnPress()
+	</Binding>
+</Bindings>

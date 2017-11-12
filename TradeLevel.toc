@@ -1,0 +1,10 @@
+## Interface: 70300
+## Title: TradeLevel
+## Title-koKR: 기술레벨
+## Notes: Shows Trade Level.
+## Notes-koKR: 기술 레벨을 표시합니다.
+## Author: Summertaker
+## Version: 1.0
+
+Localization.lua
+TradeLevel.xml
